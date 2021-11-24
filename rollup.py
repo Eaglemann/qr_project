@@ -28,9 +28,8 @@ fillNa_df = df.fillna('Unknown')
 # Group the data in a new df to show results of
 df_final = fillNa_df.groupby(['parent_part_id'], as_index=False).agg(quantity=('quantity', 'sum'))
 
-
 # Convert the DataFrame into Excel
-try:
+if len(sys.argv) > 1:
     # Check if argument ends with exel format extension
     if sys.argv[1].endswith('.xlsx'):
         # Save excel file
@@ -40,6 +39,5 @@ try:
         # Save excel file
         df_final.to_excel(sys.argv[1] + '.xlsx', index=False)
 # Handle error when no argument is provided
-except Exception as e:
-    print("Enter a valid name variable for the output.")
-    print(e)
+else:
+    df_final.to_excel('output.xlsx', index=False)
